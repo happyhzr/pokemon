@@ -1,4 +1,5 @@
-import { _decorator, animation, Collider2D, Component, Node, RigidBody2D, Vec2, Animation, input, Input, EventKeyboard, KeyCode } from 'cc';
+import { _decorator, animation, Collider2D, Component, Node, RigidBody2D, Vec2, Animation, input, Input, EventKeyboard, KeyCode, Contact2DType } from 'cc';
+import { npc } from './npc';
 const { ccclass, property } = _decorator;
 
 @ccclass('player_move')
@@ -10,6 +11,7 @@ export class player_move extends Component {
     private collider: Collider2D
     private dir = new Vec2(0, 0)
     private speed = 5
+    private npc: npc
 
     start() {
         this.rbody = this.getComponent(RigidBody2D)
@@ -18,6 +20,9 @@ export class player_move extends Component {
 
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this)
         input.on(Input.EventType.KEY_UP, this.onKeyUp, this)
+
+        this.collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginCollider, this)
+        this.collider.on(Contact2DType.END_CONTACT, this.onEndCollider, this)
     }
 
     update(deltaTime: number) {
@@ -29,6 +34,9 @@ export class player_move extends Component {
     protected onDestroy(): void {
         input.off(Input.EventType.KEY_DOWN, this.onKeyDown, this)
         input.off(Input.EventType.KEY_UP, this.onKeyUp, this)
+
+        this.collider.off(Contact2DType.BEGIN_CONTACT, this.onBeginCollider, this)
+        this.collider.off(Contact2DType.END_CONTACT, this.onEndCollider, this)
     }
 
     private onKeyDown(event: EventKeyboard) {
@@ -48,6 +56,9 @@ export class player_move extends Component {
             case KeyCode.KEY_S:
                 this.dir.y = -1
                 this.ani.play("down_move")
+                break
+            case KeyCode.KEY_F:
+                this.npc?.talk()
                 break
         }
     }
@@ -70,6 +81,16 @@ export class player_move extends Component {
                 this.dir.y = 0
                 this.ani.play("down")
                 break
+        }
+    }
+
+    private onBeginCollider(collider: Collider2D, other: Collider2D) {
+        this.npc = other.getComponent(npc)
+    }
+
+    private onEndCollider(collider: Collider2D, other: Collider2D) {
+        if (this.npc == other.getComponent(npc)) {
+            this.npc = null
         }
     }
 }

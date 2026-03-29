@@ -7,7 +7,7 @@ export class dialogue_manager extends Component {
     static instance: dialogue_manager
 
     private label: Label
-    private contents: string[]
+    private contents: string[] = []
     private index: number
     private onFinished: () => void
 
