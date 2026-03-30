@@ -37,15 +37,15 @@ export class ItemManager {
     }
 }
 
-export class Inventory {
-    private static instance: Inventory
+export class InventoryManager {
+    private static instance: InventoryManager
     itemMap = new Map<number, Item>()
 
     static getInstance() {
-        if (Inventory.instance == null) {
-            Inventory.instance = new Inventory()
+        if (InventoryManager.instance == null) {
+            InventoryManager.instance = new InventoryManager()
         }
-        return Inventory.instance
+        return InventoryManager.instance
     }
 
     getItem(itemID: number) {
