@@ -394,7 +394,7 @@
     },
     "type": 0,
     "pokemonName": "fire",
-    "maxHP": 50,
+    "maxHP": 100,
     "attack": 10,
     "speed": 10,
     "skills": [
@@ -415,6 +415,7 @@
       "__id__": 0
     },
     "fileId": "179RjbxKhOIIzxmEtyDJ+/",
+    "instance": null,
     "targetOverrides": null
   }
 ]

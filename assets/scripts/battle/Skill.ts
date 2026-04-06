@@ -9,7 +9,7 @@ export class Skill extends Component {
     @property({ type: CCInteger })
     power: number = 0
     @property({ type: Enum(PokemonType) })
-    type: PokemonType
+    type: PokemonType = PokemonType.Fire
     start() {
 
     }

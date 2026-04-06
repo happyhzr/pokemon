@@ -9,7 +9,7 @@ export enum PokemonType {
 @ccclass('Pokemon')
 export class Pokemon extends Component {
     @property({ type: Enum(PokemonType) })
-    type: PokemonType
+    type: PokemonType = PokemonType.Fire
     @property({ type: CCString })
     pokemonName: string = ""
     @property({ type: CCInteger })
@@ -53,6 +53,7 @@ export class Pokemon extends Component {
         } else {
             this.HP -= value
         }
+        console.log(this.pokemonName, this.maxHP, this.HP)
         if (this.HP <= 0) {
             let pos = this.node.getPosition()
             pos.y -= 100
@@ -61,7 +62,9 @@ export class Pokemon extends Component {
                     this.node.setPosition(value)
                 }
             }).start()
+            return false
         }
+        return true
     }
 }
 

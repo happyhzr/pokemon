@@ -5,10 +5,14 @@ const { ccclass, property } = _decorator;
 
 @ccclass('BattleUIManager')
 export class BattleUIManager extends Component {
-    static instance: BattleUIManager
+    private static instance: BattleUIManager
 
     @property({ type: Prefab })
     buttonPrefab: Prefab
+
+    static getInstance() {
+        return BattleUIManager.instance
+    }
 
     start() {
         BattleUIManager.instance = this
